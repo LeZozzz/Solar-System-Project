@@ -4,12 +4,19 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Curve;
 import com.jme3.util.SkyFactory;
 import fr.univtln.eberge.samples.body.Planet;
 import fr.univtln.eberge.samples.body.Sun;
@@ -28,15 +35,27 @@ public class App extends SimpleApplication {
         app.start();
     }
 
+
     @Override
     public void simpleInitApp() {
 
-        // Paramètres de la caméra
-        flyCam.setMoveSpeed(50);
-        flyCam.setUpVector(Vector3f.UNIT_Y);
-        cam.setLocation(new Vector3f(0, 1000, 0));
+        /**
+         * Gestion de la sensibilité de la souris
+         */
 
+        // Paramètres de la caméra
+        flyCam.setMoveSpeed(1000);
+        flyCam.setRotationSpeed(1);
+        flyCam.setUpVector(Vector3f.UNIT_Y);
+
+
+        cam.setLocation(new Vector3f(500, 500, 1800));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+        cam.setFrustumFar(3000);
+
+        /**
+         * Création du système solaire
+         */
 
         Node solarSystem = new Node("Système Solaire");
         rootNode.attachChild(solarSystem);
@@ -55,6 +74,7 @@ public class App extends SimpleApplication {
         float[] distances = {100, 160, 240, 380, 600, 1000, 1400, 1800};
         float[] rotationSpeeds = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionSpeeds = {4.15f, 1.62f, 1.0f, 0.53f, 0.084f, 0.034f, 0.011f, 0.006f};
+        float[] inclinations = {-0.03f, -177.36f, -23.44f, -25.19f, -3.12f, -26.73f, -97.8f, -29.58f};
 
         planets = new Planet[planetNames.length];
 
@@ -62,13 +82,18 @@ public class App extends SimpleApplication {
             planets[i] = new Planet(planetNames[i], sizes[i], 109.0f + distances[i], rotationSpeeds[i], revolutionSpeeds[i],
                     "Textures/Planets/" + planetNames[i].toLowerCase() + "_tex" + ".jpg", assetManager);
             planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+//            planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * inclinations[i], Vector3f.UNIT_Z));
 
             //planets[i].generateLine(assetManager);
 
             solarSystem.attachChild(planets[i].getOrbitNode());
-        }
-        initKeys();
 
+            // Ajouter une orbite visible autour du Soleil
+//            Geometry orbit = createOrbit(distances[i]);
+//            solarSystem.attachChild(orbit);
+        }
+
+        initKeys();
         initHUD();
     }
 
@@ -80,6 +105,29 @@ public class App extends SimpleApplication {
         }
         updateHUD();
     }
+
+//    private Geometry createOrbit(float radius) {
+//        int points = 64;  // Nombre de points pour créer un cercle lisse
+//        Vector3f[] vertices = new Vector3f[points + 1];
+//
+//        for (int i = 0; i <= points; i++) {
+//            float angle = i * FastMath.TWO_PI / points;
+//            float x = FastMath.cos(angle) * radius;
+//            float z = FastMath.sin(angle) * radius;
+//            vertices[i] = new Vector3f(x, 0, z);
+//        }
+//
+//        // Création de la ligne circulaire
+//        Curve curve = new Curve(vertices, 1);
+//        Geometry orbit = new Geometry("Orbit", curve);
+//
+//        // Matériau pour l'orbite
+//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//        mat.setColor("Color", ColorRGBA.White);  // Couleur blanche pour l'orbite
+//        orbit.setMaterial(mat);
+//
+//        return orbit;
+//    }
 
     /** Initialisation des touches */
     private void initKeys() {

@@ -1,18 +1,17 @@
 package fr.univtln.eberge.samples.body;
 
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Line;
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
+import com.jme3.math.*;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Curve;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.asset.AssetManager;
 
 public class Planet {
     private Geometry geometry;
+    private Geometry orbit;
     private Node orbitNode;  // Node pour gérer la révolution
     private float rotationSpeed;
     private float revolutionSpeed;
@@ -37,6 +36,10 @@ public class Planet {
         // Création du node d’orbite
         this.orbitNode = new Node(name + "_Orbit");
         this.orbitNode.attachChild(this.geometry);
+
+        // Création de l'orbite
+        orbit = createOrbit(distanceFromSun, assetManager);
+        orbitNode.attachChild(orbit); // Attacher l'orbite au node de révolution
     }
 
     public void generateLine(AssetManager assetManager) {
@@ -67,5 +70,28 @@ public class Planet {
 
     public void setLocalRotation(Quaternion quaternion) {
         this.geometry.setLocalRotation(quaternion);
+    }
+
+    private Geometry createOrbit(float radius, AssetManager assetManager) {
+        int points = 128;
+        Vector3f[] vertices = new Vector3f[points + 1];
+
+        for (int i = 0; i <= points; i++) {
+            float angle = i * FastMath.TWO_PI / points;
+            float x = FastMath.cos(angle) * radius;
+            float z = FastMath.sin(angle) * radius;
+            vertices[i] = new Vector3f(x, 0, z);
+        }
+
+        // Création de la courbe de l'orbite
+        Curve curve = new Curve(vertices, 1);
+        Geometry orbitGeometry = new Geometry("Orbit_" + radius, curve);
+
+        // Matériau pour l'orbite
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.White);
+        orbitGeometry.setMaterial(mat);
+
+        return orbitGeometry;
     }
 }
