@@ -1,6 +1,8 @@
 package fr.univtln.eberge.samples.body;
 
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Line;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -35,6 +37,16 @@ public class Planet {
         // Création du node d’orbite
         this.orbitNode = new Node(name + "_Orbit");
         this.orbitNode.attachChild(this.geometry);
+    }
+
+    public void generateLine(AssetManager assetManager) {
+        // Création de la ligne pour l'orbite
+        Line line = new Line(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0));
+        Geometry lineGeometry = new Geometry();
+        Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        lineMaterial.setColor("Color", ColorRGBA.White);
+        lineGeometry.setMaterial(lineMaterial);
+        this.orbitNode.attachChild(lineGeometry);
     }
 
     public Node getOrbitNode() {

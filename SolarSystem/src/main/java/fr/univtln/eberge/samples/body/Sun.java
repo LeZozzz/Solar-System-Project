@@ -1,6 +1,7 @@
 package fr.univtln.eberge.samples.body;
 
 import com.jme3.material.Material;
+import com.jme3.math.Quaternion;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
@@ -23,5 +24,8 @@ public class Sun {
 
     public Geometry getGeometry() {
         return geometry;
+    }
+    public void setLocalRotation(Quaternion quaternion) {
+        this.geometry.setLocalRotation(quaternion);
     }
 }

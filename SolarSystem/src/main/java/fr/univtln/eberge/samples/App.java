@@ -33,6 +33,10 @@ public class App extends SimpleApplication {
 
         // Paramètres de la caméra
         flyCam.setMoveSpeed(50);
+        flyCam.setUpVector(Vector3f.UNIT_Y);
+        cam.setLocation(new Vector3f(0, 1000, 0));
+
+        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 
         Node solarSystem = new Node("Système Solaire");
         rootNode.attachChild(solarSystem);
@@ -40,15 +44,15 @@ public class App extends SimpleApplication {
         // Création du Soleil
         Sun sun = new Sun(assetManager);
         solarSystem.attachChild(sun.getGeometry());
-        solarSystem.rotate(0, FastMath.DEG_TO_RAD * -90, 0);
+        sun.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
 
         // Création de l'espace
         getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), "Textures/Planets/space_tex.jpg", SkyFactory.EnvMapType.SphereMap));
 
         // Liste des planètes
         String[] planetNames = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
-        float[] sizes = {0.38f, 0.95f, 1.0f, 0.53f, 10.98f, 9.14f, 3.98f, 3.86f};
-        float[] distances = {50, 80, 120, 160, 300, 500, 700, 900};
+        float[] sizes = {3.8f, 9.5f, 10.0f, 5.3f, 100.98f, 90.14f, 39.8f, 38.6f};
+        float[] distances = {100, 160, 240, 380, 600, 1000, 1400, 1800};
         float[] rotationSpeeds = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionSpeeds = {4.15f, 1.62f, 1.0f, 0.53f, 0.084f, 0.034f, 0.011f, 0.006f};
 
@@ -58,6 +62,8 @@ public class App extends SimpleApplication {
             planets[i] = new Planet(planetNames[i], sizes[i], 109.0f + distances[i], rotationSpeeds[i], revolutionSpeeds[i],
                     "Textures/Planets/" + planetNames[i].toLowerCase() + "_tex" + ".jpg", assetManager);
             planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+
+            //planets[i].generateLine(assetManager);
 
             solarSystem.attachChild(planets[i].getOrbitNode());
         }
