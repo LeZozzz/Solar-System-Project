@@ -2,6 +2,7 @@ package fr.univtln.eberge.samples.body;
 
 import com.jme3.material.Material;
 import com.jme3.math.*;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Curve;
@@ -9,7 +10,7 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.asset.AssetManager;
 
-public class Planet {
+public class Planet extends Astre {
     private Geometry geometry;
     private Geometry orbit;
     private Node orbitNode;  // Node pour gérer la révolution
@@ -24,10 +25,18 @@ public class Planet {
         Sphere sphere = new Sphere(64, 64, size);
         this.geometry = new Geometry(name, sphere);
 
+
         // Matériau avec texture
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md"); // Changer de shader
+        mat.setTexture("DiffuseMap", assetManager.loadTexture(texturePath));
+
+        geometry.setMaterial(mat);
+
+        // **Activer les ombres sur la planète**
+        geometry.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
+        // Matériau avec texture
         Texture texture = assetManager.loadTexture(texturePath);
-        mat.setTexture("ColorMap", texture);
         this.geometry.setMaterial(mat);
 
         // Positionner la planète sur son orbite
@@ -47,7 +56,7 @@ public class Planet {
         Line line = new Line(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0));
         Geometry lineGeometry = new Geometry();
         Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        lineMaterial.setColor("Color", ColorRGBA.White);
+        lineMaterial.setColor("ColorMap", ColorRGBA.White);
         lineGeometry.setMaterial(lineMaterial);
         this.orbitNode.attachChild(lineGeometry);
     }
@@ -73,7 +82,7 @@ public class Planet {
     }
 
     private Geometry createOrbit(float radius, AssetManager assetManager) {
-        int points = 128;
+        int points = 512;
         Vector3f[] vertices = new Vector3f[points + 1];
 
         for (int i = 0; i <= points; i++) {

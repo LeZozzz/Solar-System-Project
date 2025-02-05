@@ -4,24 +4,17 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
-import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseAxisTrigger;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Curve;
+import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
+import fr.univtln.eberge.samples.body.Astre;
 import fr.univtln.eberge.samples.body.Planet;
 import fr.univtln.eberge.samples.body.Sun;
-import fr.univtln.eberge.samples.movement.Rotation;
-import fr.univtln.eberge.samples.movement.Revolution;
 
 public class App extends SimpleApplication {
 
@@ -29,9 +22,15 @@ public class App extends SimpleApplication {
     private float speedFactor = 1.0f;
     private BitmapText hudText;
     private boolean paused = false;
+    private Sun sun;
 
     public static void main(String[] args) {
         App app = new App();
+        AppSettings settings = new AppSettings(true);
+        settings.setTitle("Système Solaire");
+        settings.setWidth(1920);
+        settings.setHeight(1080);
+        app.setSettings(settings);
         app.start();
     }
 
@@ -39,29 +38,22 @@ public class App extends SimpleApplication {
     @Override
     public void simpleInitApp() {
 
-        /**
-         * Gestion de la sensibilité de la souris
-         */
-
         // Paramètres de la caméra
         flyCam.setMoveSpeed(1000);
         flyCam.setRotationSpeed(1);
         flyCam.setUpVector(Vector3f.UNIT_Y);
 
-
+        // Position de la caméra
         cam.setLocation(new Vector3f(500, 500, 1800));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
-        cam.setFrustumFar(3000);
+        cam.setFrustumFar(30000);
 
-        /**
-         * Création du système solaire
-         */
-
+        // Création du système solaire
         Node solarSystem = new Node("Système Solaire");
         rootNode.attachChild(solarSystem);
 
         // Création du Soleil
-        Sun sun = new Sun(assetManager);
+        sun = new Sun(assetManager, rootNode);
         solarSystem.attachChild(sun.getGeometry());
         sun.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
 
@@ -74,7 +66,6 @@ public class App extends SimpleApplication {
         float[] distances = {100, 160, 240, 380, 600, 1000, 1400, 1800};
         float[] rotationSpeeds = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionSpeeds = {4.15f, 1.62f, 1.0f, 0.53f, 0.084f, 0.034f, 0.011f, 0.006f};
-        float[] inclinations = {-0.03f, -177.36f, -23.44f, -25.19f, -3.12f, -26.73f, -97.8f, -29.58f};
 
         planets = new Planet[planetNames.length];
 
@@ -84,13 +75,7 @@ public class App extends SimpleApplication {
             planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
 //            planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * inclinations[i], Vector3f.UNIT_Z));
 
-            //planets[i].generateLine(assetManager);
-
             solarSystem.attachChild(planets[i].getOrbitNode());
-
-            // Ajouter une orbite visible autour du Soleil
-//            Geometry orbit = createOrbit(distances[i]);
-//            solarSystem.attachChild(orbit);
         }
 
         initKeys();
@@ -99,37 +84,18 @@ public class App extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
+
+        sun.rotateAstre(sun, tpf * speedFactor);
+
         for (Planet planet : planets) {
-//            Rotation.rotatePlanet(planet, tpf);
-            Revolution.revolvePlanet(planet, tpf*speedFactor);
+            Astre.revolveAstre(planet, tpf * speedFactor);
+            Astre.rotateAstre(planet, tpf * speedFactor);
         }
         updateHUD();
     }
 
-//    private Geometry createOrbit(float radius) {
-//        int points = 64;  // Nombre de points pour créer un cercle lisse
-//        Vector3f[] vertices = new Vector3f[points + 1];
-//
-//        for (int i = 0; i <= points; i++) {
-//            float angle = i * FastMath.TWO_PI / points;
-//            float x = FastMath.cos(angle) * radius;
-//            float z = FastMath.sin(angle) * radius;
-//            vertices[i] = new Vector3f(x, 0, z);
-//        }
-//
-//        // Création de la ligne circulaire
-//        Curve curve = new Curve(vertices, 1);
-//        Geometry orbit = new Geometry("Orbit", curve);
-//
-//        // Matériau pour l'orbite
-//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//        mat.setColor("Color", ColorRGBA.White);  // Couleur blanche pour l'orbite
-//        orbit.setMaterial(mat);
-//
-//        return orbit;
-//    }
 
-    /** Initialisation des touches */
+    // Initialisation des touches
     private void initKeys() {
         inputManager.addMapping("SpeedUp", new KeyTrigger(KeyInput.KEY_P));
         inputManager.addMapping("SpeedDown", new KeyTrigger(KeyInput.KEY_I));
@@ -138,9 +104,7 @@ public class App extends SimpleApplication {
         inputManager.addListener(actionListener, "SpeedUp","SpeedDown","Reverse","Pause");
     }
 
-
-
-    /** Gestion des touches */
+    // Gestion des touches
     private final ActionListener actionListener = (name, isPressed, tpf) -> {
         System.out.println(name + " : " + isPressed);
         if (isPressed) {
@@ -172,7 +136,8 @@ public class App extends SimpleApplication {
             }
         }
     };
-    /** Initialisation du HUD */
+
+    // Initialisation du HUD
     private void initHUD() {
         BitmapFont font = assetManager.loadFont("Interface/Fonts/Default.fnt");
         hudText = new BitmapText(font, false);
@@ -183,7 +148,7 @@ public class App extends SimpleApplication {
         guiNode.attachChild(hudText);
     }
 
-    /** Mise à jour du texte du HUD */
+    // Mise à jour du HUD
     private void updateHUD() {
         String direction = (speedFactor > 0) ? "+" : "-";
         hudText.setText(String.format("Vitesse : x%.2f | Direction : %s", Math.abs(speedFactor), direction));
