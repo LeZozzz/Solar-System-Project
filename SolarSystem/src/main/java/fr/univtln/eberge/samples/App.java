@@ -6,6 +6,7 @@ import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -14,7 +15,11 @@ import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 import fr.univtln.eberge.samples.body.Astre;
 import fr.univtln.eberge.samples.body.Planet;
+import fr.univtln.eberge.samples.body.Revolution;
 import fr.univtln.eberge.samples.body.Sun;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class App extends SimpleApplication {
 
@@ -23,6 +28,15 @@ public class App extends SimpleApplication {
     private BitmapText hudText;
     private boolean paused = false;
     private Sun sun;
+    private LocalDateTime currentDate = LocalDateTime.of(2000, 1, 1, 0, 0, 0); // Date de départ
+    private float elapsedTime = 0;  // Temps écoulé en secondes
+    private float timeFactor = 1;  // Facteur de vitesse du temps
+    private BitmapText timeDisplay;
+    private float earthRotationAngle = 0;   // Angle de rotation terrestre sur elle-même
+    private float earthRevolutionAngle = 0; // Angle de révolution terrestre autour du Soleil
+    private float secondsPerDay = 86400;    // Nombre de secondes dans une journée
+    private float elapsedSeconds = 0;       // Temps écoulé dans la simulation
+
 
     public static void main(String[] args) {
         App app = new App();
@@ -66,11 +80,13 @@ public class App extends SimpleApplication {
         float[] distances = {100, 160, 240, 380, 600, 1000, 1400, 1800};
         float[] rotationSpeeds = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionSpeeds = {4.15f, 1.62f, 1.0f, 0.53f, 0.084f, 0.034f, 0.011f, 0.006f};
+        float[] revolutionPeriodInYears = {0.24f, 0.62f, 1.0f, 1.88f, 11.86f, 29.46f, 84.01f, 164.8f};
+        float[] rotationPeriodInDays = {58.6f, 243.0f, 1.0f, 1.03f, 0.41f, 0.45f, 0.72f, 0.67f};
 
         planets = new Planet[planetNames.length];
 
         for (int i = 0; i < planetNames.length; i++) {
-            planets[i] = new Planet(planetNames[i], sizes[i], 109.0f + distances[i], rotationSpeeds[i], revolutionSpeeds[i],
+            planets[i] = new Planet(planetNames[i], sizes[i], 109.0f + distances[i], rotationPeriodInDays[i], revolutionPeriodInYears[i],
                     "Textures/Planets/" + planetNames[i].toLowerCase() + "_tex" + ".jpg", assetManager);
             planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
 //            planets[i].setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * inclinations[i], Vector3f.UNIT_Z));
@@ -85,12 +101,57 @@ public class App extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
 
+        // Récupérer la Terre (on suppose qu'elle est dans planets[2] car c'est la 3e planète)
+        Planet earth = planets[2];
+
+        // **1 JOUR SIMULÉ = 1 ROTATION COMPLÈTE**
+        float rotationSpeed = earth.getRotationSpeed();  // Vitesse angulaire de la Terre en radian/seconde
+        float rotationDelta = rotationSpeed * tpf * speedFactor;
+        earthRotationAngle += rotationDelta;
+
+        // Lorsque la Terre effectue une rotation complète (360°), on avance d'un jour
+        if (earthRotationAngle >= FastMath.TWO_PI) {
+            earthRotationAngle = 0;
+            elapsedSeconds += secondsPerDay; // Ajoute 24h en secondes
+        }
+
+        // **1 ANNÉE SIMULÉE = 1 RÉVOLUTION COMPLÈTE**
+        float revolutionSpeed = earth.getRevolutionSpeed();  // Vitesse orbitale de la Terre
+        float revolutionDelta = revolutionSpeed * tpf * speedFactor;
+        earthRevolutionAngle += revolutionDelta;
+
+        // Lorsque la Terre a fait une orbite complète (360°), on avance d'une année
+        if (earthRevolutionAngle >= FastMath.TWO_PI) {
+            earthRevolutionAngle = 0;
+        }
+
+        // Mise à jour de la date en fonction du temps écoulé
+        long secondsPassed = (long) elapsedSeconds;
+        currentDate = LocalDateTime.of(2000, 1, 1, 0, 0, 0).plus(secondsPassed, ChronoUnit.SECONDS);
+
         sun.rotateAstre(sun, tpf * speedFactor);
 
         for (Planet planet : planets) {
-            Astre.revolveAstre(planet, tpf * speedFactor);
-            Astre.rotateAstre(planet, tpf * speedFactor);
+            Revolution.revolvePlanet(planet, tpf * speedFactor);
         }
+
+        // **Temps simulé basé sur la révolution de la Terre**
+        float earthRevolutionTime = 365.25f * 24 * 60 * 60; // 1 an en secondes
+        elapsedTime += tpf * speedFactor * earthRevolutionTime;
+
+
+
+        // **Mise à jour des planètes et du Soleil**
+//        for (Planet planet : planets) {
+//            Astre.revolveAstre(planet, tpf * speedFactor);
+//        }
+
+//        // Convertit le temps en jours passés depuis la date initiale
+//        long secondsPassed = (long) elapsedTime;
+//        currentDate = LocalDateTime.of(2000, 1, 1, 0, 0, 0)
+//                .plus(secondsPassed, ChronoUnit.SECONDS);
+
+        // Mise à jour de l'affichage
         updateHUD();
     }
 
@@ -146,11 +207,31 @@ public class App extends SimpleApplication {
         hudText.setText("Vitesse : x1.0 | Direction : +");
         hudText.setLocalTranslation(10, settings.getHeight() - 10, 0);
         guiNode.attachChild(hudText);
+
+
+        timeDisplay = new BitmapText(font, false);
+        timeDisplay.setSize(font.getCharSet().getRenderedSize() * 2);
+        timeDisplay.setColor(ColorRGBA.White);
+        timeDisplay.setLocalTranslation(10, settings.getHeight() - 50, 0); // Position sous l'affichage de la vitesse
+
+        guiNode.attachChild(timeDisplay);
     }
 
     // Mise à jour du HUD
     private void updateHUD() {
         String direction = (speedFactor > 0) ? "+" : "-";
         hudText.setText(String.format("Vitesse : x%.2f | Direction : %s", Math.abs(speedFactor), direction));
+
+//        String formattedTime = String.format("%02d:%02d:%02d | %02d/%02d/%04d",
+//                currentDate.getHour(), currentDate.getMinute(), currentDate.getSecond(),
+//                currentDate.getDayOfMonth(), currentDate.getMonthValue(), currentDate.getYear());
+//
+//        timeDisplay.setText("Date : " + formattedTime);
+
+        String formattedTime = String.format("%02d:%02d:%02d | %02d/%02d/%04d",
+                currentDate.getHour(), currentDate.getMinute(), currentDate.getSecond(),
+                currentDate.getDayOfMonth(), currentDate.getMonthValue(), currentDate.getYear());
+
+        timeDisplay.setText("Date : " + formattedTime);
     }
 }

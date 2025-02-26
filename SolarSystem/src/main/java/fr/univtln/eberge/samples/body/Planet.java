@@ -17,9 +17,10 @@ public class Planet extends Astre {
     private float rotationSpeed;
     private float revolutionSpeed;
 
-    public Planet(String name, float size, float distanceFromSun, float rotationSpeed, float revolutionSpeed, String texturePath, AssetManager assetManager) {
-        this.rotationSpeed = rotationSpeed;
-        this.revolutionSpeed = revolutionSpeed;
+    public Planet(String name, float size, float distanceFromSun, float rotationPeriodInDays, float revolutionPeriodInYears, String texturePath, AssetManager assetManager) {
+
+        this.rotationSpeed = FastMath.TWO_PI / (rotationPeriodInDays * 86400); // Rotation en radian/seconde
+        this.revolutionSpeed = FastMath.TWO_PI / (revolutionPeriodInYears * (365.25f * 86400)); // Révolution en radian/seconde
 
         // Création de la sphère représentant la planète
         Sphere sphere = new Sphere(64, 64, size);
@@ -60,6 +61,8 @@ public class Planet extends Astre {
         lineGeometry.setMaterial(lineMaterial);
         this.orbitNode.attachChild(lineGeometry);
     }
+
+
 
     public Node getOrbitNode() {
         return orbitNode;

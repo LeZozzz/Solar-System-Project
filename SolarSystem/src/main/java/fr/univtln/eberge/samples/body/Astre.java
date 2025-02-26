@@ -27,4 +27,5 @@ public class Astre {
     public float getRotationSpeed() {
         return rotationSpeed;
     }
+
 }

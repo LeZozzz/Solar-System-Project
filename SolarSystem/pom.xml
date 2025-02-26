@@ -17,9 +17,9 @@
     <!-- JMonkeyEngine -->
     <jme3_g>org.jmonkeyengine</jme3_g>
     <jme3_v>3.6.1-stable</jme3_v>
-    <configuration>
-      <release>17</release>  <!-- Changez selon votre version -->
-    </configuration>
+<!--    <configuration>-->
+<!--      <release>17</release>  &lt;!&ndash; Changez selon votre version &ndash;&gt;-->
+<!--    </configuration>-->
   </properties>
 
   <dependencyManagement>
@@ -35,6 +35,12 @@
   </dependencyManagement>
 
   <dependencies>
+    <!-- Dépendance pour org.json -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20220320</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
