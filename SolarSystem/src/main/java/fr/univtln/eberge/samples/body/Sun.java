@@ -11,8 +11,6 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.asset.AssetManager;
 
-import javax.swing.*;
-
 public class Sun extends Astre {
     private Geometry geometry;
     private PointLight sunLight;

@@ -124,6 +124,7 @@
       <artifactId>jme3-vr</artifactId>
       <version>${jme3_v}</version>
     </dependency>
+
   </dependencies>
 
   <build>

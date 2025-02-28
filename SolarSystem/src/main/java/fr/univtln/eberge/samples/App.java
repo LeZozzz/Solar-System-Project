@@ -13,7 +13,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
-import fr.univtln.eberge.samples.body.Astre;
 import fr.univtln.eberge.samples.body.Planet;
 import fr.univtln.eberge.samples.body.Revolution;
 import fr.univtln.eberge.samples.body.Sun;
@@ -29,8 +28,8 @@ public class App extends SimpleApplication {
     private boolean paused = false;
     private Sun sun;
     private LocalDateTime currentDate = LocalDateTime.of(2000, 1, 1, 0, 0, 0); // Date de départ
-    private float elapsedTime = 0;  // Temps écoulé en secondes
-    private float timeFactor = 1;  // Facteur de vitesse du temps
+    private float elapsedTime = 0;
+    private float timeFactor = 1;  
     private BitmapText timeDisplay;
     private float earthRotationAngle = 0;   // Angle de rotation terrestre sur elle-même
     private float earthRevolutionAngle = 0; // Angle de révolution terrestre autour du Soleil

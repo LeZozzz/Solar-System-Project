@@ -2,9 +2,6 @@ package fr.univtln.eberge.samples.body;
 
 import com.jme3.math.FastMath;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
-
-import java.util.Collections;
 
 public class Astre {
     private Geometry geometry;

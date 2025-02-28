@@ -1,9 +1,7 @@
 package fr.univtln.eberge.samples.body;
 
-import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import fr.univtln.eberge.samples.body.Planet;
 
 public class Revolution {
 
