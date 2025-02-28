@@ -35,6 +35,7 @@ public class PlanetInfoPanel {
         guiNode.attachChild(titleText);
         guiNode.attachChild(infoText);
         panelNode.attachChild(infoText);
+        panelNode.attachChild(titleText);
     }
 
     public void updateInfo(Planet planet) {
