@@ -32,6 +32,7 @@ public class App2 extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         settings.setTitle("Système Solaire");
         settings.setResolution(1920, 1080);
+        settings.setFrameRate(144);
         settings.setFullscreen(true);
         app.setSettings(settings);
         app.start();
@@ -59,7 +60,7 @@ public class App2 extends SimpleApplication {
 
         Node asteroidBelt = KeplerBelt.createBelt(assetManager, 1000, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt);
-        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 5000, 4800f, 5000f); // 300 astéroïdes entre Mars et Jupiter
+        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 1000, 4800f, 5000f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt2);
 
         createPlanets();

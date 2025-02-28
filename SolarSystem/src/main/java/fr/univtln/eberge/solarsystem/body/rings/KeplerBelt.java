@@ -32,42 +32,13 @@ public class KeplerBelt {
         return asteroidBelt;
     }
 
-    private static final String[] ASTEROID_TEXTURES = {
-            "Textures/Planets/asteroids/asteroid_tex.jpg",
-            "Textures/Planets/asteroids/asteroid_tex2.jpg",
-            "Textures/Planets/asteroids/asteroid_tex3.jpg",
-            "Textures/Planets/asteroids/asteroid_tex4.jpg"
-    };
-
     private static final Random RANDOM = new Random();
 
-    public static Geometry createAsteroid(AssetManager assetManager) {
-        // Génération d'une taille aléatoire pour l'astéroïde
-        float radius = 5f + RANDOM.nextFloat() * 10f;
-        Sphere asteroidMesh = new Sphere(3, 3, radius);
-        Geometry asteroidGeo = new Geometry("Asteroid", asteroidMesh);
-
-        // Sélection aléatoire d'une texture
-        String selectedTexture = ASTEROID_TEXTURES[RANDOM.nextInt(ASTEROID_TEXTURES.length)];
-
-        // Matériau avec texture aléatoire
-        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        mat.setTexture("DiffuseMap", assetManager.loadTexture(selectedTexture));
-
-        asteroidGeo.setMaterial(mat);
-        return asteroidGeo;
-    }
-
 //    public static Geometry createAsteroid(AssetManager assetManager) {
-//        // Enregistrer le chargeur STL
-//        assetManager.registerLoader(StlLoader.class, "stl");
-//
-//        // Charger le modèle 3D existant au format STL
-//        Spatial asteroidModel = assetManager.loadModel("Models/Asteroid/Asteroid.stl");
-//
 //        // Génération d'une taille aléatoire pour l'astéroïde
-//        float scale = 0.5f + RANDOM.nextFloat() * 1.5f;
-//        asteroidModel.scale(scale);
+//        float radius = 5f + RANDOM.nextFloat() * 10f;
+//        Sphere asteroidMesh = new Sphere(3, 3, radius);
+//        Geometry asteroidGeo = new Geometry("Asteroid", asteroidMesh);
 //
 //        // Sélection aléatoire d'une texture
 //        String selectedTexture = ASTEROID_TEXTURES[RANDOM.nextInt(ASTEROID_TEXTURES.length)];
@@ -76,12 +47,38 @@ public class KeplerBelt {
 //        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
 //        mat.setTexture("DiffuseMap", assetManager.loadTexture(selectedTexture));
 //
-//        asteroidModel.setMaterial(mat);
-//
-//        // Créer une géométrie à partir du modèle chargé
-//        Geometry asteroidGeo = new Geometry("Asteroid", new Sphere(3, 3, 1));  // Créer une sphère temporaire
-//        asteroidGeo.setMesh(asteroidModel.getControl(Geometry.class).getMesh());  // Remplacer la sphère par le modèle chargé
-//
+//        asteroidGeo.setMaterial(mat);
 //        return asteroidGeo;
+//    }
+
+public static Geometry createAsteroid(AssetManager assetManager) {
+    // Liste des modèles .j3o disponibles avec leurs textures associées
+    String[][] asteroidModelsAndTextures = {
+            {"Models/Asteroid/Asteroid1.j3o", "Textures/Asteroid/Asteroid1_tex.png"},
+            {"Models/Asteroid/Asteroid2.j3o", "Textures/Asteroid/Asteroid2_tex.png"},
+            {"Models/Asteroid/Asteroid3.j3o", "Textures/Asteroid/Asteroid3_tex.png"},
+            // Ajoutez autant de paires modèle-texture que nécessaire
+    };
+
+    // Sélection aléatoire d'un modèle avec sa texture associée
+    String[] selectedModelAndTexture = asteroidModelsAndTextures[RANDOM.nextInt(asteroidModelsAndTextures.length)];
+
+    // Chargement du modèle sélectionné
+    Spatial asteroidGeo = assetManager.loadModel(selectedModelAndTexture[0]);
+
+    asteroidGeo.setLocalScale(5f);
+
+    // Chargement de la texture associée
+    Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+    mat.setTexture("DiffuseMap", assetManager.loadTexture(selectedModelAndTexture[1]));
+
+    // Application du matériau au modèle
+    asteroidGeo.setMaterial(mat);
+
+    return (Geometry) asteroidGeo;
+
+
+}
+
 
 }
