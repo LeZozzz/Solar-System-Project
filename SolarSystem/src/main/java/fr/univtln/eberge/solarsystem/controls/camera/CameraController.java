@@ -86,11 +86,13 @@ public class CameraController extends BaseAppState {
         if (isChaseCamActive) {
             chaseCam.setEnabled(true);
             flyCam.setEnabled(false);  // Désactiver FlyCam
+            inputManager.setCursorVisible(true);
             planetInfoPanel.setVisible(true);
         } else {
             chaseCam.setEnabled(false);
             flyCam.setEnabled(true);  // Activer FlyCam
             flyCam.setDragToRotate(true); // Permet la rotation avec la souris
+            inputManager.setCursorVisible(false);
             planetInfoPanel.setVisible(false);
         }
     }
@@ -98,6 +100,9 @@ public class CameraController extends BaseAppState {
 
 
     private void switchToNextPlanet() {
+        if(flyCam.isEnabled()){
+            return;
+        }
         currentPlanetIndex = (currentPlanetIndex + 1) % planets.size();
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         chaseCam.setDefaultDistance(200);
@@ -106,7 +111,10 @@ public class CameraController extends BaseAppState {
         planetInfoPanel.updateInfo(planets.get(currentPlanetIndex));
     }
     private void switchToPrevPlanet() {
-        currentPlanetIndex = (currentPlanetIndex - 1) % planets.size();
+        if(flyCam.isEnabled()){
+            return;
+        }
+        currentPlanetIndex = (((currentPlanetIndex - 1) % planets.size()) + planets.size())% planets.size();
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         planetInfoPanel.updateInfo(planets.get(currentPlanetIndex));
     }

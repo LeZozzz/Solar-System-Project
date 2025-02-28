@@ -24,9 +24,9 @@ public class HUD {
         guiNode.attachChild(hudText);
     }
 
-    public void updateHUD(TimeManager timeManager) {
+    public void updateHUD(TimeManager timeManager, double time) {
         String direction = (timeManager.getSpeedFactor() > 0) ? "+" : "-";
-        String formattedTime = timeManager.getFormattedTime();
+        String formattedTime = timeManager.getFormattedTime(time);
         hudText.setText(String.format("Vitesse : x%.2f | Direction : %s | Temps : %s",
                 Math.abs(timeManager.getSpeedFactor()), direction, formattedTime));
     }

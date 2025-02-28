@@ -18,6 +18,7 @@ import fr.univtln.eberge.solarsystem.utils.TimeManager;
 import fr.univtln.eberge.solarsystem.visuals.*;
 import fr.univtln.eberge.solarsystem.body.rings.KeplerBelt;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class App2 extends SimpleApplication {
     private Sun sun;
     private TimeManager timeManager;
     private HUD hud;
+    private double time = Instant.now().getEpochSecond();
 
     public static void main(String[] args) {
         App2 app = new App2();
@@ -58,9 +60,9 @@ public class App2 extends SimpleApplication {
 //        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 1000, 2200f, 2400f); // 300 astéroïdes entre Mars et Jupiter
 //        rootNode.attachChild(asteroidBelt2);
 
-        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 1000, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
+        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 2000, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt);
-        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 1000, 4800f, 5000f); // 300 astéroïdes entre Mars et Jupiter
+        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5000f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt2);
 
         createPlanets();
@@ -100,8 +102,9 @@ public class App2 extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
+        time += tpf *timeManager.getSpeedFactor();
         for (Planet planet : planets) {
-            Revolution.revolvePlanet(planet, tpf * timeManager.getSpeedFactor());
+            Revolution.revolvePlanet(planet, time);
 
             if (planet.getName().equals("Earth")) {
                 float rotationAngle = planet.getRotationSpeed() * tpf * timeManager.getSpeedFactor(); // Rotation sur elle-même
@@ -109,7 +112,7 @@ public class App2 extends SimpleApplication {
                 timeManager.updateTime(rotationAngle, revolutionAngle);
             }
         }
-        hud.updateHUD(timeManager);
+        hud.updateHUD(timeManager, time);
 //        hud.updateHUD(timeManager);
 //        timeManager.updateTime(tpf, planets.get(2));
 //

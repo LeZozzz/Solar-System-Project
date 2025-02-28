@@ -1,7 +1,12 @@
 package fr.univtln.eberge.solarsystem.utils;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TimeManager {
-    private float speedFactor = 0.01f;
+    private float speedFactor = 1f;
     private float elapsedSimulatedTime = 0; // Temps en secondes
     private static final float EARTH_ROTATION_PERIOD = 360.0f; // Rotation propre = 1 jour
     private static final float EARTH_REVOLUTION_PERIOD = 360.0f; // Révolution = 1 an
@@ -33,14 +38,22 @@ public class TimeManager {
         this.speedFactor = speedFactor;
     }
 
-    public String getFormattedTime() {
-        int totalSeconds = (int) elapsedSimulatedTime;
-        int years = totalSeconds / (86400 * 365);
-        int days = (totalSeconds % (86400 * 365)) / 86400;
-        int hours = (totalSeconds % 86400) / 3600;
-        int minutes = (totalSeconds % 3600) / 60;
-        int seconds = totalSeconds % 60;
-        return String.format("%d ans | %d jours | %02dh:%02dm:%02ds", years, days, hours, minutes, seconds);
+    public String getFormattedTime(double time) {
+
+        Instant instant = Instant.ofEpochSecond((long)time);
+        System.out.println(time);
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String affichage = zonedDateTime.format(dateTimeFormatter);
+        return affichage;
+
+        // long totalSeconds = (int) elapsedSimulatedTime;
+        // long years = totalSeconds / (86400 * 365);
+        // long days = (totalSeconds % (86400 * 365)) / 86400;
+        // long hours = (totalSeconds % 86400) / 3600;
+        // long minutes = (totalSeconds % 3600) / 60;
+        // long seconds = totalSeconds % 60;
+        // return String.format("%d ans | %d jours | %02dh:%02dm:%02ds", years, days, hours, minutes, seconds);
     }
 //    private float speedFactor = 1.0f;
 //    private float elapsedSimulatedTime = 0;
