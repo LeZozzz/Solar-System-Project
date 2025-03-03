@@ -21,7 +21,7 @@ public class KeplerBelt {
             float radius = minRadius + random.nextFloat() * (maxRadius - minRadius); // Rayon aléatoire
             float x = FastMath.cos(angle) * radius;
             float z = FastMath.sin(angle) * radius;
-            float y = (random.nextFloat() - 0.5f) * 50f; // Variation en hauteur
+            float y = (random.nextFloat() - 0.5f) * 100f; // Variation en hauteur
 
             Geometry asteroid = createAsteroid(assetManager);
             asteroid.setLocalTranslation(new Vector3f(x, y, z));

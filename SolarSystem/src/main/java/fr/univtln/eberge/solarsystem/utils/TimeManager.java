@@ -41,7 +41,6 @@ public class TimeManager {
     public String getFormattedTime(double time) {
 
         Instant instant = Instant.ofEpochSecond((long)time);
-        System.out.println(time);
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String affichage = zonedDateTime.format(dateTimeFormatter);

@@ -1,0 +1,82 @@
+{
+    "mercury": {
+        "name": "Mercure",
+        "meanRadius": 2439.7,
+        "mass": {
+            "massValue": 3.301,
+            "massExponent": 23
+        },
+        "gravity": 3.7,
+        "sideralOrbit": 87.97
+    },
+    "venus": {
+        "name": "Venus",
+        "meanRadius": 6051.8,
+        "mass": {
+            "massValue": 4.867,
+            "massExponent": 24
+        },
+        "gravity": 8.87,
+        "sideralOrbit": 224.7
+    },
+    "earth": {
+        "name": "Terre",
+        "meanRadius": 6371.0,
+        "mass": {
+            "massValue": 5.972,
+            "massExponent": 24
+        },
+        "gravity": 9.8,
+        "sideralOrbit": 365.25
+    },
+    "mars": {
+        "name": "Mars",
+        "meanRadius": 3389.5,
+        "mass": {
+            "massValue": 0.64171,
+            "massExponent": 24
+        },
+        "gravity": 3.71,
+        "sideralOrbit": 687.0
+    },
+    "jupiter": {
+        "name": "Jupiter",
+        "meanRadius": 69911,
+        "mass": {
+            "massValue": 1.898,
+            "massExponent": 27
+        },
+        "gravity": 24.79,
+        "sideralOrbit": 4333
+    },
+    "saturn": {
+        "name": "Saturne",
+        "meanRadius": 58232,
+        "mass": {
+            "massValue": 5.683,
+            "massExponent": 26
+        },
+        "gravity": 10.44,
+        "sideralOrbit": 10759
+    },
+    "uranus": {
+        "name": "Uranus",
+        "meanRadius": 25362,
+        "mass": {
+            "massValue": 8.681,
+            "massExponent": 25
+        },
+        "gravity": 8.69,
+        "sideralOrbit": 30687
+    },
+    "neptune": {
+        "name": "Neptune",
+        "meanRadius": 24622,
+        "mass": {
+            "massValue": 1.024,
+            "massExponent": 26
+        },
+        "gravity": 11.15,
+        "sideralOrbit": 60190
+    }
+}

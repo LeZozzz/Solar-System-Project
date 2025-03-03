@@ -47,6 +47,8 @@ public class App2 extends SimpleApplication {
         cam.setLocation(new Vector3f(500, 500, 4000));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
         cam.setFrustumFar(30000);
+        setDisplayStatView(false);
+        
 
         rootNode.attachChild(SkyFactory.createSky(assetManager, "Textures/Planets/space_tex.jpg", SkyFactory.EnvMapType.SphereMap));
 
@@ -60,9 +62,9 @@ public class App2 extends SimpleApplication {
 //        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 1000, 2200f, 2400f); // 300 astéroïdes entre Mars et Jupiter
 //        rootNode.attachChild(asteroidBelt2);
 
-        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 2000, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
+        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 1200, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt);
-        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5000f); // 300 astéroïdes entre Mars et Jupiter
+        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5200f); // 300 astéroïdes entre Mars et Jupiter
         rootNode.attachChild(asteroidBelt2);
 
         createPlanets();

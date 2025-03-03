@@ -45,11 +45,11 @@ public class PlanetInfoPanel {
         // 🔍 Récupère les informations depuis l’API
         String info = PlanetInfoFetcher.getPlanetInfo(planet.getName());
 
-        // 📝 Mise en forme des données avec des puces
-        String formattedInfo = info.replace("\n", "\n• "); // Ajoute des puces devant chaque ligne
-        formattedInfo = "• " + formattedInfo; // Ajoute la première puce
+        // // 📝 Mise en forme des données avec des puces
+        // String formattedInfo = info.replace("\n", "\n• "); // Ajoute des puces devant chaque ligne
+        // formattedInfo = "• " + formattedInfo; // Ajoute la première puce
 
-        infoText.setText(formattedInfo);
+        infoText.setText(info);
     }
 
     public void setVisible(boolean visible) {
