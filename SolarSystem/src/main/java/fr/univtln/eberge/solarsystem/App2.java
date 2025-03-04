@@ -14,6 +14,7 @@ import fr.univtln.eberge.solarsystem.body.sphere.Sun;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
 import fr.univtln.eberge.solarsystem.controls.InputHandler;
 import fr.univtln.eberge.solarsystem.controls.movements.Revolution;
+import fr.univtln.eberge.solarsystem.controls.movements.Rotation;
 import fr.univtln.eberge.solarsystem.utils.TimeManager;
 import fr.univtln.eberge.solarsystem.visuals.*;
 import fr.univtln.eberge.solarsystem.body.rings.KeplerBelt;
@@ -80,7 +81,6 @@ public class App2 extends SimpleApplication {
     private void createPlanets() {
         String[] names = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
         float[] sizes = {3.8f, 9.5f, 10.0f, 5.3f, 100.98f, 90.14f, 39.8f, 38.6f};
-//        float[] distances = {300, 460, 640, 880, 1100, 1500, 1800, 2100};
         float[] distances = {58, 108, 150, 228, 778, 1429, 2870, 4498};
         float[] rotationPeriods = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionPeriods = {0.24f, 0.62f, 1.0f, 1.88f, 11.86f, 29.46f, 84.01f, 164.8f};
@@ -107,21 +107,8 @@ public class App2 extends SimpleApplication {
         time += tpf *timeManager.getSpeedFactor();
         for (Planet planet : planets) {
             Revolution.revolvePlanet(planet, time);
-
-            if (planet.getName().equals("Earth")) {
-                float rotationAngle = planet.getRotationSpeed() * tpf * timeManager.getSpeedFactor(); // Rotation sur elle-même
-                float revolutionAngle = planet.getRevolutionSpeed() * tpf * timeManager.getSpeedFactor(); // Révolution autour du Soleil
-                timeManager.updateTime(rotationAngle, revolutionAngle);
-            }
+            Rotation.rotatePlanet(planet, time);
         }
         hud.updateHUD(timeManager, time);
-//        hud.updateHUD(timeManager);
-//        timeManager.updateTime(tpf, planets.get(2));
-//
-//        for (Planet planet : planets) {
-//            Revolution.revolvePlanet(planet, tpf * timeManager.getSpeedFactor());
-//            Rotation.rotatePlanet(planet, tpf * timeManager.getSpeedFactor());
-//
-//        }
     }
 }
