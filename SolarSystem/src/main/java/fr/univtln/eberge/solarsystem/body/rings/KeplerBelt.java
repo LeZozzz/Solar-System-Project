@@ -33,23 +33,6 @@ public class KeplerBelt {
 
     private static final Random RANDOM = new Random();
 
-//    public static Geometry createAsteroid(AssetManager assetManager) {
-//        // Génération d'une taille aléatoire pour l'astéroïde
-//        float radius = 5f + RANDOM.nextFloat() * 10f;
-//        Sphere asteroidMesh = new Sphere(3, 3, radius);
-//        Geometry asteroidGeo = new Geometry("Asteroid", asteroidMesh);
-//
-//        // Sélection aléatoire d'une texture
-//        String selectedTexture = ASTEROID_TEXTURES[RANDOM.nextInt(ASTEROID_TEXTURES.length)];
-//
-//        // Matériau avec texture aléatoire
-//        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-//        mat.setTexture("DiffuseMap", assetManager.loadTexture(selectedTexture));
-//
-//        asteroidGeo.setMaterial(mat);
-//        return asteroidGeo;
-//    }
-
 public static Geometry createAsteroid(AssetManager assetManager) {
     // Liste des modèles .j3o disponibles avec leurs textures associées
     String[][] asteroidModelsAndTextures = {
@@ -65,7 +48,7 @@ public static Geometry createAsteroid(AssetManager assetManager) {
     // Chargement du modèle sélectionné
     Spatial asteroidGeo = assetManager.loadModel(selectedModelAndTexture[0]);
 
-    asteroidGeo.setLocalScale(5f);
+    asteroidGeo.setLocalScale(1.5f);
 
     // Chargement de la texture associée
     Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");

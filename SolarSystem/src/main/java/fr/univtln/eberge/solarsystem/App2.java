@@ -5,10 +5,10 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
-import fr.univtln.eberge.solarsystem.body.rings.SaturnRings;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 import fr.univtln.eberge.solarsystem.body.sphere.Sun;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
@@ -94,10 +94,16 @@ public class App2 extends SimpleApplication {
             rootNode.attachChild(planet.getOrbitNode());
             rootNode.attachChild(Orbit.createOrbit(distances[i]+109f, assetManager, color[i]));
 
+            // if (planet.getName().equals("Saturn")) {
+            //     Node rings = SaturnRings.createRings(assetManager, 120f, 180f); // Anneaux entre 120 et 180 de rayon
+            //     rings.setLocalTranslation(planet.getLocalTranslation()); // Positionne les anneaux sur Saturne
+            //     rootNode.attachChild(rings);
+            // }
             if (planet.getName().equals("Saturn")) {
-                Node rings = SaturnRings.createRings(assetManager, 120f, 180f); // Anneaux entre 120 et 180 de rayon
+                Geometry rings = Planet.createPlanetRings("Textures/Planets/saturn_ring_tex.png",assetManager); // Anneaux entre 120 et 180 de rayon
                 rings.setLocalTranslation(planet.getLocalTranslation()); // Positionne les anneaux sur Saturne
                 rootNode.attachChild(rings);
+                planet.getOrbitNode().attachChild(rings);
             }
         }
     }

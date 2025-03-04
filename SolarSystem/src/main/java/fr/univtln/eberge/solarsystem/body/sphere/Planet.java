@@ -3,22 +3,29 @@ package fr.univtln.eberge.solarsystem.body.sphere;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.Quaternion;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
+import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
+import com.jme3.util.BufferUtils;
+import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.material.RenderState;
 
 public class Planet {
     private String name;
     private float size;
-    private float distanceFromSun;
     private float rotationPeriod;
     private float revolutionPeriod;
     private Node orbitNode;
     private Node planetNode;
     private Geometry geometry;
-
-    public Planet(String name, float size, float distanceFromSun, float rotationPeriod, float revolutionPeriod, String texturePath, AssetManager assetManager) {
+    private float distanceFromSun;
+        
+    
+        public Planet(String name, float size, float distanceFromSun, float rotationPeriod, float revolutionPeriod, String texturePath, AssetManager assetManager) {
         this.name = name;
         this.size = size;
         this.distanceFromSun = distanceFromSun;
@@ -78,5 +85,58 @@ public class Planet {
 
     public Vector3f getLocalTranslation() {
         return planetNode.getLocalTranslation();
+    }
+    public static Geometry createPlanetRings(String texturePath, AssetManager assetManager) {
+            int segments = 64;
+            float innerRadius = 90.14f * 1.236145f;
+            float outerRadius = 90.14f * 2.27318f;
+    
+            Mesh ringMesh = new Mesh();
+            Vector3f[] vertices = new Vector3f[segments * 2];
+            Vector2f[] texCoords = new Vector2f[segments * 2];
+            int[] indices = new int[segments * 6];
+    
+            for (int i = 0; i < segments; i++) {
+                float angle = (float) (i * Math.PI * 2 / segments);
+                float cos = (float) Math.cos(angle);
+                float sin = (float) Math.sin(angle);
+    
+                // Positions des sommets
+                vertices[i * 2] = new Vector3f(innerRadius * cos, 0, innerRadius * sin);
+                vertices[i * 2 + 1] = new Vector3f(outerRadius * cos, 0, outerRadius * sin);
+    
+                // Mapping UV correct :
+                texCoords[i * 2] = new Vector2f(0, i / (float) segments); // Intérieur (gauche de l’image)
+                texCoords[i * 2 + 1] = new Vector2f(1, i / (float) segments); // Extérieur (droite de l’image)
+    
+                int next = (i + 1) % segments;
+    
+                // Triangles pour le disque
+                indices[i * 6] = i * 2;
+                indices[i * 6 + 1] = next * 2;
+                indices[i * 6 + 2] = i * 2 + 1;
+    
+                indices[i * 6 + 3] = i * 2 + 1;
+                indices[i * 6 + 4] = next * 2;
+                indices[i * 6 + 5] = next * 2 + 1;
+            }
+            ringMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
+            ringMesh.setBuffer(VertexBuffer.Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoords));
+            ringMesh.setBuffer(VertexBuffer.Type.Index, 3, BufferUtils.createIntBuffer(indices));
+
+            ringMesh.updateBound();
+
+            Geometry ringGeo = new Geometry(texturePath, ringMesh);
+            Material ringMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+            ringMat.setTexture("ColorMap", assetManager.loadTexture(texturePath));
+
+            ringMat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+            ringMat.getAdditionalRenderState().setDepthWrite(true);
+            ringMat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+
+            ringGeo.setMaterial(ringMat);
+            ringGeo.setQueueBucket(RenderQueue.Bucket.Transparent);
+
+            return ringGeo;
     }
 }
