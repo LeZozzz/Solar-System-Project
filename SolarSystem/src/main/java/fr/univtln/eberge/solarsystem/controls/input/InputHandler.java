@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.controls;
+package fr.univtln.eberge.solarsystem.controls.input;
 
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;

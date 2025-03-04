@@ -100,10 +100,8 @@ public class CameraController extends BaseAppState {
         if(flyCam.isEnabled()){
             return;
         }
-        System.out.println("Actual :" + currentPlanetIndex);
-        System.out.println("Next");
         currentPlanetIndex = (currentPlanetIndex+1) % planets.size();
-        System.out.println("Actual :" + currentPlanetIndex);
+
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         chaseCam.setDefaultDistance(200);
 
@@ -114,43 +112,17 @@ public class CameraController extends BaseAppState {
         if(flyCam.isEnabled()){
             return;
         }
-        System.out.println("Actual :" + currentPlanetIndex);
-        System.out.println("Prev");
         currentPlanetIndex = (((currentPlanetIndex - 1) % planets.size()) + planets.size())% planets.size();
-        System.out.println("Actual :" + currentPlanetIndex);
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         planetInfoPanel.updateInfo(planets.get(currentPlanetIndex));
     }
 
 
-    // private void switchToNextPlanet() {
-    //     if(flyCam.isEnabled()){
-    //         return;
-    //     }
-    //     currentPlanetIndex = (currentPlanetIndex[i+1]);
-    //     chaseCam.setSpatial(planets.get(currentPlanetIndex[i]).getBodyNode());
-    //     chaseCam.setDefaultDistance(200);
-
-    //     // Mise à jour des infos de la planète avec l'API
-    //     planetInfoPanel.updateInfo(planets.get(currentPlanetIndex[i]));
-    // }
-    // private void switchToPrevPlanet() {
-    //     if(flyCam.isEnabled()){
-    //         return;
-    //     }
-    //     currentPlanetIndex = (currentPlanetIndex[i-1]);
-    //     chaseCam.setSpatial(planets.get(currentPlanetIndex[i]).getBodyNode());
-    //     planetInfoPanel.updateInfo(planets.get(currentPlanetIndex[i]));
-    // }
-
     private void updateChaseCamUI(boolean isVisible) {
-        // Masquer/Afficher les informations de la planète suivie (HUD, fiche descriptive, etc.)
         if (isVisible) {
             System.out.println("Affichage des informations de la planète");
-            // Ici, appelle la méthode qui affiche les infos (exemple : showPlanetInfo())
         } else {
             System.out.println("Masquage des informations de la planète");
-            // Ici, appelle la méthode qui cache les infos (exemple : hidePlanetInfo())
         }
     }
 

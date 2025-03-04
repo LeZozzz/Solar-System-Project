@@ -12,9 +12,8 @@ import com.jme3.util.SkyFactory;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 import fr.univtln.eberge.solarsystem.body.sphere.Sun;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
-import fr.univtln.eberge.solarsystem.controls.InputHandler;
-import fr.univtln.eberge.solarsystem.controls.movements.Revolution;
-import fr.univtln.eberge.solarsystem.controls.movements.Rotation;
+import fr.univtln.eberge.solarsystem.controls.input.InputHandler;
+import fr.univtln.eberge.solarsystem.controls.movements.Movement;
 import fr.univtln.eberge.solarsystem.utils.TimeManager;
 import fr.univtln.eberge.solarsystem.visuals.*;
 import fr.univtln.eberge.solarsystem.body.rings.KeplerBelt;
@@ -29,6 +28,7 @@ public class App2 extends SimpleApplication {
     private TimeManager timeManager;
     private HUD hud;
     private double time = Instant.now().getEpochSecond();
+    private List<Node> belts = new ArrayList<>();
 
     public static void main(String[] args) {
         App2 app = new App2();
@@ -58,15 +58,12 @@ public class App2 extends SimpleApplication {
         rootNode.attachChild(sun.getSunNode());
         rootNode.addLight(sun.getSunLight());
 
-//        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 1000, 900f, 1000f); // 300 astéroïdes entre Mars et Jupiter
-//        rootNode.attachChild(asteroidBelt);
-//        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 1000, 2200f, 2400f); // 300 astéroïdes entre Mars et Jupiter
-//        rootNode.attachChild(asteroidBelt2);
-
-        Node asteroidBelt = KeplerBelt.createBelt(assetManager, 1200, 429f, 578f); // 300 astéroïdes entre Mars et Jupiter
-        rootNode.attachChild(asteroidBelt);
-        Node asteroidBelt2 = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5200f); // 300 astéroïdes entre Mars et Jupiter
-        rootNode.attachChild(asteroidBelt2);
+        Node principalBelt = KeplerBelt.createBelt(assetManager, 1200, 429f, 578f); 
+        rootNode.attachChild(principalBelt);
+        Node kuiperBelt = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5200f); 
+        rootNode.attachChild(kuiperBelt);
+        belts.add(principalBelt);
+        belts.add(kuiperBelt);
 
         createPlanets();
         timeManager = new TimeManager();
@@ -94,14 +91,9 @@ public class App2 extends SimpleApplication {
             rootNode.attachChild(planet.getOrbitNode());
             rootNode.attachChild(Orbit.createOrbit(distances[i]+109f, assetManager, color[i]));
 
-            // if (planet.getName().equals("Saturn")) {
-            //     Node rings = SaturnRings.createRings(assetManager, 120f, 180f); // Anneaux entre 120 et 180 de rayon
-            //     rings.setLocalTranslation(planet.getLocalTranslation()); // Positionne les anneaux sur Saturne
-            //     rootNode.attachChild(rings);
-            // }
             if (planet.getName().equals("Saturn")) {
-                Geometry rings = Planet.createPlanetRings("Textures/Planets/saturn_ring_tex.png",assetManager); // Anneaux entre 120 et 180 de rayon
-                rings.setLocalTranslation(planet.getLocalTranslation()); // Positionne les anneaux sur Saturne
+                Geometry rings = Planet.createPlanetRings("Textures/Planets/saturn_ring_tex.png",assetManager); 
+                rings.setLocalTranslation(planet.getLocalTranslation()); 
                 rootNode.attachChild(rings);
                 planet.getOrbitNode().attachChild(rings);
             }
@@ -112,9 +104,11 @@ public class App2 extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         time += tpf *timeManager.getSpeedFactor();
         for (Planet planet : planets) {
-            Revolution.revolvePlanet(planet, time);
-            Rotation.rotatePlanet(planet, time);
+            Movement.revolvePlanet(planet, time);
+            Movement.rotatePlanet(planet, time);
         }
+        Movement.revolveBelt(belts.get(0), time, 5.93f);
+        Movement.revolveBelt(belts.get(1), time, 200f);
         hud.updateHUD(timeManager, time);
     }
 }
