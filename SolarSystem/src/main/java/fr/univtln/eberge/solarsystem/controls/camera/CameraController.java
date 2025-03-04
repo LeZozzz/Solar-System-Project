@@ -21,7 +21,7 @@ public class CameraController extends BaseAppState {
     private SimpleApplication app;
     private InputManager inputManager;
     private List<Planet> planets;
-    private static int currentPlanetIndex = 1; // Terre par défaut
+    private static int currentPlanetIndex = 0;  
     private PlanetInfoPanel planetInfoPanel;
     private FlyByCamera flyCam;
 
@@ -60,16 +60,13 @@ public class CameraController extends BaseAppState {
     private final ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean isPressed, float tpf) {
-            if (isPressed && name.equals("NextPlanet")) {
-                switchToNextPlanet();
-            }
-            if (isPressed && name.equals("PrevPlanet")) {
-                switchToPrevPlanet();
-            }
             if (isPressed) {
                 switch (name) {
                     case "NextPlanet":
                         switchToNextPlanet();
+                        break;
+                    case "PrevPlanet":
+                        switchToPrevPlanet();
                         break;
                     case "ToggleCamera":
                         toggleCameraMode();
@@ -103,7 +100,10 @@ public class CameraController extends BaseAppState {
         if(flyCam.isEnabled()){
             return;
         }
-        currentPlanetIndex = (currentPlanetIndex + 1) % planets.size();
+        System.out.println("Actual :" + currentPlanetIndex);
+        System.out.println("Next");
+        currentPlanetIndex = (currentPlanetIndex+1) % planets.size();
+        System.out.println("Actual :" + currentPlanetIndex);
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         chaseCam.setDefaultDistance(200);
 
@@ -114,10 +114,35 @@ public class CameraController extends BaseAppState {
         if(flyCam.isEnabled()){
             return;
         }
+        System.out.println("Actual :" + currentPlanetIndex);
+        System.out.println("Prev");
         currentPlanetIndex = (((currentPlanetIndex - 1) % planets.size()) + planets.size())% planets.size();
+        System.out.println("Actual :" + currentPlanetIndex);
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         planetInfoPanel.updateInfo(planets.get(currentPlanetIndex));
     }
+
+
+    // private void switchToNextPlanet() {
+    //     if(flyCam.isEnabled()){
+    //         return;
+    //     }
+    //     currentPlanetIndex = (currentPlanetIndex[i+1]);
+    //     chaseCam.setSpatial(planets.get(currentPlanetIndex[i]).getBodyNode());
+    //     chaseCam.setDefaultDistance(200);
+
+    //     // Mise à jour des infos de la planète avec l'API
+    //     planetInfoPanel.updateInfo(planets.get(currentPlanetIndex[i]));
+    // }
+    // private void switchToPrevPlanet() {
+    //     if(flyCam.isEnabled()){
+    //         return;
+    //     }
+    //     currentPlanetIndex = (currentPlanetIndex[i-1]);
+    //     chaseCam.setSpatial(planets.get(currentPlanetIndex[i]).getBodyNode());
+    //     planetInfoPanel.updateInfo(planets.get(currentPlanetIndex[i]));
+    // }
+
     private void updateChaseCamUI(boolean isVisible) {
         // Masquer/Afficher les informations de la planète suivie (HUD, fiche descriptive, etc.)
         if (isVisible) {
