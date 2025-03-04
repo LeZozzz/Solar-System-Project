@@ -6,7 +6,7 @@
 
 > **Simulation interactive du Système Solaire en 3D** 🌌 avec gestion des rotations, révolutions, HUD interactif, et affichage des informations des planètes en temps réel.
 
-![Preview](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Solar_system.jpg/800px-Solar_system.jpg)
+![Preview](https://fr.wikipedia.org/wiki/Syst%C3%A8me_solaire#/media/Fichier:Solar_System_true_color.jpg)
 
 ---
 
@@ -99,10 +99,6 @@ solar-system/
 🌟 N'hésite pas à laisser une étoile 🌟 sur le repo si ce projet t'a aidé !
 
 ---
-
-## 📲 **Contact & Contributions**
-💬 **Tu veux contribuer ?** Ouvre une **Pull Request** ou un **Issue** sur GitHub !  
-📧 **Contact** : [ton.email@example.com](mailto:ton.email@example.com)  
 
 **🚀 Bon voyage dans l’espace ! 🚀**
 
