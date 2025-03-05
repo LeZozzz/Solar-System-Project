@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.body.rings;
+package fr.univtln.eberge.solarsystem.body.belt;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;

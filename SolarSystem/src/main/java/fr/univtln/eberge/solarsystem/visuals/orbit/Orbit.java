@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.visuals;
+package fr.univtln.eberge.solarsystem.visuals.orbit;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;

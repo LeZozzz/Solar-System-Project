@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.utils;
+package fr.univtln.eberge.solarsystem.utils.convertion;
 
 import java.io.File;
 

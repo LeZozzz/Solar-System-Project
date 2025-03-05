@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.visuals;
+package fr.univtln.eberge.solarsystem.visuals.panel;
 
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;

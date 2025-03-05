@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.utils;
+package fr.univtln.eberge.solarsystem.utils.time;
 
 import java.time.Instant;
 import java.time.ZoneId;

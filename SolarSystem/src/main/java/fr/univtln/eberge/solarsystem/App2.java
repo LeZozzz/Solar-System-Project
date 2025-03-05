@@ -9,14 +9,19 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
+
+import fr.univtln.eberge.solarsystem.body.belt.KeplerBelt;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 import fr.univtln.eberge.solarsystem.body.sphere.Sun;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
 import fr.univtln.eberge.solarsystem.controls.input.InputHandler;
 import fr.univtln.eberge.solarsystem.controls.movements.Movement;
-import fr.univtln.eberge.solarsystem.utils.TimeManager;
+import fr.univtln.eberge.solarsystem.utils.time.TimeManager;
 import fr.univtln.eberge.solarsystem.visuals.*;
-import fr.univtln.eberge.solarsystem.body.rings.KeplerBelt;
+import fr.univtln.eberge.solarsystem.visuals.color.PastelColors;
+import fr.univtln.eberge.solarsystem.visuals.orbit.Orbit;
+import fr.univtln.eberge.solarsystem.visuals.panel.HUD;
+import fr.univtln.eberge.solarsystem.visuals.panel.PlanetInfoPanel;
 
 import java.time.Instant;
 import java.util.ArrayList;

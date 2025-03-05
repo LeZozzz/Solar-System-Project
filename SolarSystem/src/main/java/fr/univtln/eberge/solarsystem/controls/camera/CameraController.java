@@ -7,10 +7,11 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
+import fr.univtln.eberge.solarsystem.visuals.panel.PlanetInfoPanel;
+
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import fr.univtln.eberge.solarsystem.visuals.PlanetInfoPanel;
 
 import java.util.List;
 

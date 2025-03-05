@@ -5,7 +5,7 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
-import fr.univtln.eberge.solarsystem.utils.TimeManager;
+import fr.univtln.eberge.solarsystem.utils.time.TimeManager;
 
 public class InputHandler {
     public static void initKeys(InputManager inputManager, TimeManager timeManager, CameraController cameraController) {

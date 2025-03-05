@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.visuals;
+package fr.univtln.eberge.solarsystem.visuals.panel;
 
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
@@ -6,8 +6,10 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
+
+import fr.univtln.eberge.solarsystem.utils.time.TimeManager;
+
 import com.jme3.asset.AssetManager;
-import fr.univtln.eberge.solarsystem.utils.TimeManager;
 
 public class HUD {
     private BitmapText hudText;

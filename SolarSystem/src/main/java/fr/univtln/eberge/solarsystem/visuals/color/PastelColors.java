@@ -1,4 +1,4 @@
-package fr.univtln.eberge.solarsystem.visuals;
+package fr.univtln.eberge.solarsystem.visuals.color;
 
 import com.jme3.math.ColorRGBA;
 
