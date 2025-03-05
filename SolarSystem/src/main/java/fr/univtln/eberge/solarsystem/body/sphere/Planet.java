@@ -2,6 +2,7 @@ package fr.univtln.eberge.solarsystem.body.sphere;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -23,12 +24,17 @@ public class Planet {
     private Node planetNode;
     private Geometry geometry;
     private float distanceFromSun;
+    private float semiMajorAxis;   // Demi-grand axe
+    private float eccentricity;    // Excentricité
+    private float currentAngle = 0;
         
     
-        public Planet(String name, float size, float distanceFromSun, float rotationPeriod, float revolutionPeriod, String texturePath, AssetManager assetManager) {
+        public Planet(String name, float size, float eccentricity, float semiMajorAxis, float rotationPeriod, float revolutionPeriod, String texturePath, AssetManager assetManager) {
         this.name = name;
         this.size = size;
-        this.distanceFromSun = distanceFromSun;
+        this.semiMajorAxis = semiMajorAxis;
+        this.eccentricity = eccentricity;
+        // this.distanceFromSun = distanceFromSun;
         this.rotationPeriod = rotationPeriod;
         this.revolutionPeriod = revolutionPeriod;
 
@@ -43,7 +49,7 @@ public class Planet {
         geometry.setMaterial(material);
 
         planetNode.attachChild(geometry);
-        planetNode.setLocalTranslation(new Vector3f(distanceFromSun + 109f, 0, 0));
+        // planetNode.setLocalTranslation(new Vector3f(distanceFromSun + 109f, 0, 0));
     }
 
     public Node getOrbitNode() {
@@ -86,6 +92,27 @@ public class Planet {
     public Vector3f getLocalTranslation() {
         return planetNode.getLocalTranslation();
     }
+
+    // Modification en cour des trajectoires
+    public float getSemiMajorAxis() { 
+        return semiMajorAxis; 
+    }
+    public float getEccentricity() { return eccentricity; }
+    public float getCurrentAngle() { return currentAngle; }
+    public void setCurrentAngle(float currentAngle) { this.currentAngle = currentAngle; }
+
+    public float getAngle(double time){
+        return (float)(((FastMath.TWO_PI / (revolutionPeriod*365*24*60*60)) * time) % FastMath.TWO_PI);
+    }
+    public Vector3f calcTrajectory(double time){
+        float focalDistance = semiMajorAxis * eccentricity;
+        float angle = getAngle(time);
+        float x = semiMajorAxis * FastMath.cos(angle) - focalDistance; // Centré sur le foyer
+        float z = semiMajorAxis * FastMath.sqrt(1 - eccentricity * eccentricity) * FastMath.sin(angle);
+        return new Vector3f(x, 0, z);
+    }
+
+
     public static Geometry createPlanetRings(String texturePath, AssetManager assetManager) {
             int segments = 64;
             float innerRadius = 90.14f * 1.236145f;

@@ -19,19 +19,16 @@ public class PlanetInfoPanel {
         this.panelNode = new Node("PlanetInfoPanel");
         BitmapFont font = assetManager.loadFont("Interface/Fonts/Default.fnt");
 
-        // 🌍 Titre en grand et en couleur
         titleText = new BitmapText(font, false);
         titleText.setSize(font.getCharSet().getRenderedSize() * 3);
         titleText.setColor(ColorRGBA.Yellow);
-        titleText.setLocalTranslation(50, 400, 0); // Position en haut
+        titleText.setLocalTranslation(50, 400, 0); 
 
-        // 📜 Texte des informations
         infoText = new BitmapText(font, false);
         infoText.setSize(font.getCharSet().getRenderedSize() * 2);
         infoText.setColor(ColorRGBA.White);
-        infoText.setLocalTranslation(50, 350, 0); // Position sous le titre
+        infoText.setLocalTranslation(50, 350, 0); 
 
-        // Ajout à l'interface graphique
         guiNode.attachChild(titleText);
         guiNode.attachChild(infoText);
         panelNode.attachChild(infoText);
@@ -39,24 +36,16 @@ public class PlanetInfoPanel {
     }
 
     public void updateInfo(Planet planet) {
-        // 🎯 Met à jour le titre avec le nom de la planète
         titleText.setText(PlanetInfoFetcher.getPlanetName(planet.getName()));
-
-        // 🔍 Récupère les informations depuis l’API
         String info = PlanetInfoFetcher.getPlanetInfo(planet.getName());
-
-        // // 📝 Mise en forme des données avec des puces
-        // String formattedInfo = info.replace("\n", "\n• "); // Ajoute des puces devant chaque ligne
-        // formattedInfo = "• " + formattedInfo; // Ajoute la première puce
-
         infoText.setText(info);
     }
 
     public void setVisible(boolean visible) {
         if (visible) {
-            guiNode.attachChild(panelNode);  // ✅ Afficher le panneau
+            guiNode.attachChild(panelNode); 
         } else {
-            guiNode.detachChild(panelNode);  // ✅ Masquer le panneau
+            guiNode.detachChild(panelNode); 
         }
     }
 

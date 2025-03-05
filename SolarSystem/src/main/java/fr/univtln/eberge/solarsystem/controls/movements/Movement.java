@@ -12,11 +12,6 @@ public class Movement {
         Quaternion rotation = new Quaternion().fromAngleAxis(angle, Vector3f.UNIT_Y);
         planet.getPlanetNode().setLocalRotation(rotation);
     }
-    public static void revolvePlanet(Planet planet, double time) {
-        float angle = (float)(((FastMath.TWO_PI / (planet.getRevolutionPeriod()*365*24*60*60)) * time)%FastMath.TWO_PI) ;
-        Quaternion rotation = new Quaternion().fromAngleAxis(angle, Vector3f.UNIT_Y);
-        planet.getOrbitNode().setLocalRotation(rotation);
-    }
     public static void revolveBelt(Node asteroidBelt, double time, float period) {
         float angle = (float)(((FastMath.TWO_PI / (period*365*24*60*60)) * time)%FastMath.TWO_PI) ;
         Quaternion rotation = new Quaternion().fromAngleAxis(angle, Vector3f.UNIT_Y);
@@ -27,4 +22,7 @@ public class Movement {
     //     Quaternion rotation = new Quaternion().fromAngleAxis(angle, Vector3f.UNIT_Y);
     //     sun.getSunNode().rotate(rotation);
     // }
+    public static void revolvePlanet(Planet planet, double time) {
+        planet.getOrbitNode().setLocalTranslation(planet.calcTrajectory(time));
+    }
 }

@@ -17,7 +17,6 @@ import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
 import fr.univtln.eberge.solarsystem.controls.input.InputHandler;
 import fr.univtln.eberge.solarsystem.controls.movements.Movement;
 import fr.univtln.eberge.solarsystem.utils.time.TimeManager;
-import fr.univtln.eberge.solarsystem.visuals.*;
 import fr.univtln.eberge.solarsystem.visuals.color.PastelColors;
 import fr.univtln.eberge.solarsystem.visuals.orbit.Orbit;
 import fr.univtln.eberge.solarsystem.visuals.panel.HUD;
@@ -83,18 +82,19 @@ public class App2 extends SimpleApplication {
     private void createPlanets() {
         String[] names = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
         float[] sizes = {3.8f, 9.5f, 10.0f, 5.3f, 100.98f, 90.14f, 39.8f, 38.6f};
-        float[] distances = {58, 108, 150, 228, 778, 1429, 2870, 4498};
         float[] rotationPeriods = {58.6f, -243.0f, 1.0f, 1.03f, 0.41f, 0.45f, -0.72f, 0.67f};
         float[] revolutionPeriods = {0.24f, 0.62f, 1.0f, 1.88f, 11.86f, 29.46f, 84.01f, 164.8f};
+        float[] semiMajorAxis = {58, 108, 150, 228, 778, 1429, 2870, 4498};
+        float[] eccentricity = {0.2056f, 0.0068f, 0.0167f, 0.0934f, 0.0484f, 0.0542f, 0.0472f, 0.0086f};
         ColorRGBA[] color = {PastelColors.MERCURY, PastelColors.VENUS, PastelColors.EARTH, PastelColors.MARS, PastelColors.JUPITER, PastelColors.SATURN, PastelColors.URANUS, PastelColors.NEPTUNE};
         for (int i = 0; i < names.length; i++) {
-            Planet planet = new Planet(names[i], sizes[i], distances[i], rotationPeriods[i], revolutionPeriods[i],
+            Planet planet = new Planet(names[i], sizes[i], eccentricity[i], semiMajorAxis[i]+109f, rotationPeriods[i], revolutionPeriods[i],
                     "Textures/Planets/" + names[i].toLowerCase() + "_tex" + ".jpg", assetManager);
 
             planet.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
             planets.add(planet);
             rootNode.attachChild(planet.getOrbitNode());
-            rootNode.attachChild(Orbit.createOrbit(distances[i]+109f, assetManager, color[i]));
+            rootNode.attachChild(Orbit.createOrbit(planet, assetManager, color[i]));
 
             if (planet.getName().equals("Saturn")) {
                 Geometry rings = Planet.createPlanetRings("Textures/Planets/saturn_ring_tex.png",assetManager); 
@@ -107,7 +107,7 @@ public class App2 extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        time += tpf *timeManager.getSpeedFactor();
+        time += tpf*timeManager.getSpeedFactor();
         for (Planet planet : planets) {
             Movement.revolvePlanet(planet, time);
             Movement.rotatePlanet(planet, time);
