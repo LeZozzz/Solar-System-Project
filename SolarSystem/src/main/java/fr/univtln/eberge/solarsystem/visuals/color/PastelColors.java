@@ -20,4 +20,5 @@ public class PastelColors {
     public static final ColorRGBA SATURN = new ColorRGBA(213f / 255, 193f / 255, 135f / 255, 1f);
     public static final ColorRGBA URANUS = new ColorRGBA(104f / 255, 204f / 255, 218f / 255, 1f);
     public static final ColorRGBA NEPTUNE = new ColorRGBA(112f / 255, 140f / 255, 227f / 255, 1f);
+    public static final ColorRGBA MOON = new ColorRGBA(0.8f, 0.8f, 0.8f, 1f);
 }

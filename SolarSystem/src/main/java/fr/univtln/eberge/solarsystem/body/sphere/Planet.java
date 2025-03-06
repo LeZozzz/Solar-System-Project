@@ -1,5 +1,8 @@
 package fr.univtln.eberge.solarsystem.body.sphere;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.FastMath;
@@ -27,6 +30,7 @@ public class Planet {
     private float semiMajorAxis;   // Demi-grand axe
     private float eccentricity;    // Excentricité
     private float currentAngle = 0;
+    private List<Moon> moons = new ArrayList<>();
         
     
         public Planet(String name, float size, float eccentricity, float semiMajorAxis, float rotationPeriod, float revolutionPeriod, String texturePath, AssetManager assetManager) {
@@ -49,7 +53,6 @@ public class Planet {
         geometry.setMaterial(material);
 
         planetNode.attachChild(geometry);
-        // planetNode.setLocalTranslation(new Vector3f(distanceFromSun + 109f, 0, 0));
     }
 
     public Node getOrbitNode() {
@@ -106,7 +109,7 @@ public class Planet {
     }
     public Vector3f calcTrajectory(double time){
         float focalDistance = semiMajorAxis * eccentricity;
-        float angle = getAngle(time);
+        float angle = - getAngle(time);
         float x = semiMajorAxis * FastMath.cos(angle) - focalDistance; // Centré sur le foyer
         float z = semiMajorAxis * FastMath.sqrt(1 - eccentricity * eccentricity) * FastMath.sin(angle);
         return new Vector3f(x, 0, z);
@@ -165,5 +168,12 @@ public class Planet {
             ringGeo.setQueueBucket(RenderQueue.Bucket.Transparent);
 
             return ringGeo;
+    }
+    public void addMoon(Moon moon) {
+        moons.add(moon);
+        this.getPlanetNode().attachChild(moon.getOrbitNode()); // Attacher la lune à l'orbite de la planète
+    }
+    public List<Moon> getMoons() {
+        return moons;
     }
 }

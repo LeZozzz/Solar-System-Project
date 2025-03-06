@@ -11,6 +11,7 @@ import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 
 import fr.univtln.eberge.solarsystem.body.belt.KeplerBelt;
+import fr.univtln.eberge.solarsystem.body.sphere.Moon;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 import fr.univtln.eberge.solarsystem.body.sphere.Sun;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
@@ -102,6 +103,32 @@ public class App2 extends SimpleApplication {
                 rootNode.attachChild(rings);
                 planet.getOrbitNode().attachChild(rings);
             }
+            if (planet.getName().equals("Earth")) {
+                Moon moon = new Moon("Moon", 1f, 10f, 20.3844f, 0.0549f, 0.0748f, 27.3f, "Textures/Moon/earth_moon_tex.jpg", assetManager);
+                moon.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+                planet.getPlanetNode().attachChild(Orbit.createMoonOrbit(moon, assetManager, PastelColors.MOON));
+                planet.addMoon(moon);
+            }
+            if (planet.getName().equals("Mars")) {
+                Moon phobos = new Moon("Phobos", 0.5f, 10f, 7.7f, 0.0151f, 0.0151f, 0.3f, "Textures/Moon/phobos_moon_tex.jpg", assetManager);
+                phobos.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+                planet.getPlanetNode().attachChild(Orbit.createMoonOrbit(phobos, assetManager, PastelColors.MOON));
+                planet.addMoon(phobos);
+                Moon deimos = new Moon("Deimos", 0.3f, 10f, 30.3f, 0.00033f, 0.00033f, 1.3f, "Textures/Moon/deimos_moon_tex.jpg", assetManager);
+                deimos.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+                planet.getPlanetNode().attachChild(Orbit.createMoonOrbit(deimos, assetManager, PastelColors.MOON));
+                planet.addMoon(deimos);
+            }
+            if (planet.getName().equals("Jupiter")){
+                Moon io = new Moon("Io", 2.6f, 10f, 150.77f, 0.0041f, 0.0041f, 1.8f, "Textures/Moon/io_moon_tex.jpg", assetManager);
+                io.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+                planet.getPlanetNode().attachChild(Orbit.createMoonOrbit(io, assetManager, PastelColors.MOON));
+                planet.addMoon(io);
+                Moon europa = new Moon("Europa", 2.6f, 10f, 300.55f, 0.0094f, 0.0094f, 3.5f, "Textures/Moon/europa_moon_tex.jpg", assetManager);
+                europa.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
+                planet.getPlanetNode().attachChild(Orbit.createMoonOrbit(europa, assetManager, PastelColors.MOON));
+                planet.addMoon(europa);
+            }
         }
     }
 
@@ -109,6 +136,10 @@ public class App2 extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         time += tpf*timeManager.getSpeedFactor();
         for (Planet planet : planets) {
+            for (Moon moon : planet.getMoons()) {
+                Movement.revolveMoon(moon, time);
+                Movement.rotateMoon(moon, time);
+            }
             Movement.revolvePlanet(planet, time);
             Movement.rotatePlanet(planet, time);
         }
