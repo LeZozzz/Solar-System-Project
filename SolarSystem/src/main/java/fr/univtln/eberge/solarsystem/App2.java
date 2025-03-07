@@ -57,15 +57,15 @@ public class App2 extends SimpleApplication {
         
 
         rootNode.attachChild(SkyFactory.createSky(assetManager, "Textures/Planets/space_tex.jpg", SkyFactory.EnvMapType.SphereMap));
-
+        
         sun = new Sun(assetManager);
         sun.setLocalRotation(new Quaternion().fromAngleAxis(FastMath.DEG_TO_RAD * -90, Vector3f.UNIT_X));
         rootNode.attachChild(sun.getSunNode());
         rootNode.addLight(sun.getSunLight());
 
-        Node principalBelt = KeplerBelt.createBelt(assetManager, 1200, 429f, 578f); 
+        Node principalBelt = KeplerBelt.createBelt(assetManager, 1200, 429f, 578f);
         rootNode.attachChild(principalBelt);
-        Node kuiperBelt = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5200f); 
+        Node kuiperBelt = KeplerBelt.createBelt(assetManager, 10000, 4800f, 5200f);
         rootNode.attachChild(kuiperBelt);
         belts.add(principalBelt);
         belts.add(kuiperBelt);
