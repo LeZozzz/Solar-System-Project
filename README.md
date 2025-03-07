@@ -6,7 +6,7 @@
 
 > **Simulation interactive du Système Solaire en 3D** 🌌 avec gestion des rotations, révolutions, HUD interactif, et affichage des informations des planètes en temps réel.
 
-![logo](Ressources/Logo/logo.jpg)
+![logo](SolarSystem/src/main/resources/Logo/logo.jpg)
 
 ---
 
