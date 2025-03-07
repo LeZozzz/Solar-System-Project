@@ -6,7 +6,7 @@
 
 > **Simulation interactive du Système Solaire en 3D** 🌌 avec gestion des rotations, révolutions, HUD interactif, et affichage des informations des planètes en temps réel.
 
-![alt text](https://fr.wikipedia.org/wiki/Syst%C3%A8me_solaire#/media/Fichier:Solar_System_true_color.jpg)
+![logo](Ressources/Logo/logo.jpg)
 
 ---
 
@@ -78,7 +78,7 @@ solar-system/
 │
 │── src/main/resources/Textures/
 │   ├── Planets/               # Textures des planètes
-│   ├── Moon/                # Textures des lunes
+│   ├── Moon/                  # Textures des lunes
 │   └── Asteroids/             # Textures des astéroïdes
 │
 │── pom.xml                    # Configuration Maven
@@ -89,13 +89,13 @@ solar-system/
 
 ## 🌟 **Améliorations Futures**
 🔹 Réorganisation entière du **GUI**
-🔹 **Affichage des constellations** et autres étoiles du ciel  
-🔹 Intégration de **données en temps réel** via API de la NASA  
+🔹 **Affichage des constellations** et autres étoiles du ciel
+🔹 Intégration de **données en temps réel** via API de la NASA
 
 ---
 
 ## 📝 **Licence**
-📝 Ce projet est sous licence **MIT** - Tu peux l'utiliser librement et le modifier.  
+📝 Ce projet est sous licence **MIT** - Tu peux l'utiliser librement et le modifier.
 🌟 N'hésite pas à laisser une étoile 🌟 sur le repo si ce projet t'a aidé !
 
 ---
