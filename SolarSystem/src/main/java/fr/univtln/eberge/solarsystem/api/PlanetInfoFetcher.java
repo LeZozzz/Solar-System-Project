@@ -46,19 +46,18 @@ public class PlanetInfoFetcher {
 
         return String.format(
                 """
-                Nom: %s
-                Rayon: %.2f km
-                Masse: %.3fx10^%d kg
-                Gravité: %.2f m/s²
-                Période orbitale: %.2f jours
-                        
+                Rayon : %.2f km
+                Masse : %.3fx10^%d kg
+                Gravité : %.2f m/s²
+                Période orbitale : %.2f jours
+                Lunes : %s
                         """,
-                json.getString("name"),
                 json.getDouble("meanRadius"),
                 json.getJSONObject("mass").getDouble("massValue"),
                 json.getJSONObject("mass").getInt("massExponent"),
                 json.getDouble("gravity"),
-                json.getDouble("sideralOrbit")
+                json.getDouble("sideralOrbit"),
+                json.getString("moon")
         );
     }
 

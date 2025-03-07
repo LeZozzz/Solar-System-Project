@@ -7,7 +7,8 @@
             "massExponent": 23
         },
         "gravity": 3.7,
-        "sideralOrbit": 87.97
+        "sideralOrbit": 87.97,
+        "moon": "Aucune"
     },
     "venus": {
         "name": "Venus",
@@ -17,7 +18,8 @@
             "massExponent": 24
         },
         "gravity": 8.87,
-        "sideralOrbit": 224.7
+        "sideralOrbit": 224.7,
+        "moon": "Aucune"
     },
     "earth": {
         "name": "Terre",
@@ -27,7 +29,8 @@
             "massExponent": 24
         },
         "gravity": 9.8,
-        "sideralOrbit": 365.25
+        "sideralOrbit": 365.25,
+        "moon": "Lune"
     },
     "mars": {
         "name": "Mars",
@@ -37,7 +40,8 @@
             "massExponent": 24
         },
         "gravity": 3.71,
-        "sideralOrbit": 687.0
+        "sideralOrbit": 687.0,
+        "moon": "Phobos, Deimos"
     },
     "jupiter": {
         "name": "Jupiter",
@@ -47,7 +51,8 @@
             "massExponent": 27
         },
         "gravity": 24.79,
-        "sideralOrbit": 4333
+        "sideralOrbit": 4333,
+        "moon": "Io, Europe"
     },
     "saturn": {
         "name": "Saturne",
@@ -57,7 +62,8 @@
             "massExponent": 26
         },
         "gravity": 10.44,
-        "sideralOrbit": 10759
+        "sideralOrbit": 10759,
+        "moon": "Titan, Encelade"
     },
     "uranus": {
         "name": "Uranus",
@@ -67,7 +73,8 @@
             "massExponent": 25
         },
         "gravity": 8.69,
-        "sideralOrbit": 30687
+        "sideralOrbit": 30687,
+        "moon": "Titania, Oberon"
     },
     "neptune": {
         "name": "Neptune",
@@ -77,6 +84,7 @@
             "massExponent": 26
         },
         "gravity": 11.15,
-        "sideralOrbit": 60190
+        "sideralOrbit": 60190,
+        "moon": "Triton, Proteus"
     }
 }
