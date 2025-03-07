@@ -10,6 +10,15 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 
+/**
+ * Classe représentant une étoile.
+ * Une étoile est un corps céleste qui émet de la lumière.
+ * Une étoile est représentée par un noeud d'étoile, une géométrie et une lumière.
+ * La géométrie est une sphère de taille donnée.
+ * La lumière est une lumière ponctuelle de couleur blanche.
+ * @author eberge
+ */
+
 public class Sun {
     private Node sunNode;
     private PointLight sunLight;

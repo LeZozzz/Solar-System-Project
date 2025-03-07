@@ -7,6 +7,16 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 
+/**
+ * Classe abstraite représentant un corps céleste.
+ * Un corps céleste est un objet qui orbite autour d'une étoile.
+ * Il possède un nom, une taille, une distance à l'étoile, une période de rotation et une période de révolution.
+ * Il possède également un noeud pour son orbite et un noeud pour son corps.
+ * Il possède une géométrie pour son corps.
+ * Il est possible de récupérer les noeuds de l'orbite et du corps, ainsi que les périodes de rotation et de révolution.
+ * @author eberge
+ */
+
 public abstract class CelestialBody {
     protected String name;
     protected float size;

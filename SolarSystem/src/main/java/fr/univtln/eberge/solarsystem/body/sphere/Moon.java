@@ -9,6 +9,21 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 
+/**
+ * Classe représentant un satellite naturel d'une planète.
+ * Un satellite est un corps céleste qui orbite autour d'une planète.
+ * Un satellite est représenté par un nom, une taille, une distance par rapport à la planète, une période de révolution, une période de rotation, un noeud d'orbite, un noeud de satellite, une géométrie, un demi grand axe et une excentricité.
+ * Un satellite est un noeud d'orbite qui contient un noeud de satellite qui contient une géométrie.
+ * La géométrie est une sphère de taille donnée.
+ * Le demi grand axe et l'excentricité permettent de calculer la trajectoire du satellite.
+ * La trajectoire est calculée en fonction du temps.
+ * La trajectoire est une ellipse centrée sur le foyer.
+ * L'angle de la trajectoire est calculé en fonction du temps.
+ * La position du satellite est calculée en fonction de l'angle.
+ * La position est donnée par les coordonnées x et z de la trajectoire.
+ * @author eberge
+ */
+
 public class Moon {
     private String name;
     private float size;
@@ -42,7 +57,16 @@ public class Moon {
 
         moonNode.attachChild(geometry);
     }
-
+    /**
+     * Calcule la trajectoire du satellite en fonction du temps.
+     * La trajectoire est une ellipse centrée sur le foyer.
+     * L'angle de la trajectoire est calculé en fonction du temps.
+     * La position du satellite est calculée en fonction de l'angle.
+     * La position est donnée par les coordonnées x et z de la trajectoire.
+     * @param time
+     * @author https://github.com/Florian-Audouard
+     * @return Vector3f
+     */
     public Vector3f calcTrajectory(double time){
         float focalDistance = semiMajorAxis * eccentricity;
         float angle = getAngle(time);

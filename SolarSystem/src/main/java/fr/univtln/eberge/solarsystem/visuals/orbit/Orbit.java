@@ -11,6 +11,12 @@ import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 
 import com.jme3.math.Vector3f;
 
+/**
+ * Classe permettant de créer une orbite pour un corps céleste
+ * (planète ou lune) donné.
+ * @author eberge
+ */
+
 public class Orbit {
     public static Geometry createOrbit(Planet planet, AssetManager assetManager, ColorRGBA color) {
         int points = 1024; // Plus de points = orbite plus lisse
@@ -19,7 +25,6 @@ public class Orbit {
         for (int i = 0; i <= points; i++) {
             vertices[i] = planet.calcTrajectory(i*planet.getRevolutionPeriod()*365*24*60*60/(points-1));
         }
-   
         // Création de la courbe de l'orbite
         Curve curve = new Curve(vertices, 1);
         Geometry orbitGeometry = new Geometry("Orbit_" + planet.getName(), curve);

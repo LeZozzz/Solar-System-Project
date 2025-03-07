@@ -7,6 +7,11 @@ import com.jme3.input.controls.KeyTrigger;
 import fr.univtln.eberge.solarsystem.controls.camera.CameraController;
 import fr.univtln.eberge.solarsystem.utils.time.TimeManager;
 
+/**
+ * Classe permettant de gérer les entrées clavier
+ * @author eberge
+ */
+
 public class InputHandler {
     public static void initKeys(InputManager inputManager, TimeManager timeManager, CameraController cameraController) {
         inputManager.addMapping("SpeedUp", new KeyTrigger(KeyInput.KEY_P));

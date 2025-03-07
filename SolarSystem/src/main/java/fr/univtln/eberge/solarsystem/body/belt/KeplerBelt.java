@@ -10,6 +10,17 @@ import com.jme3.scene.Spatial;
 
 import java.util.Random;
 
+/**
+ * Classe permettant de générer une ceinture d'astéroïdes.
+ * Les astéroïdes sont générés aléatoirement sur un cercle.
+ * Chaque astéroïde est un modèle 3D avec une texture associée.
+ * Les modèles et textures sont choisis aléatoirement parmi une liste prédéfinie.
+ * Les astéroïdes sont ensuite ajoutés à un Node qui représente la ceinture d'astéroïdes.
+ * @see #createBelt(AssetManager, int, float, float)
+ * @see #createAsteroid(AssetManager)
+ * @author eberge
+ */
+
 public class KeplerBelt {
 
     public static Node createBelt(AssetManager assetManager, int numAsteroids, float minRadius, float maxRadius) {
@@ -34,29 +45,17 @@ public class KeplerBelt {
     private static final Random RANDOM = new Random();
 
 public static Geometry createAsteroid(AssetManager assetManager) {
-    // Liste des modèles .j3o disponibles avec leurs textures associées
     String[][] asteroidModelsAndTextures = {
             {"Models/Asteroid/Asteroid1.j3o", "Textures/Asteroid/Asteroid1_tex.png"},
             {"Models/Asteroid/Asteroid2.j3o", "Textures/Asteroid/Asteroid2_tex.png"},
             {"Models/Asteroid/Asteroid3.j3o", "Textures/Asteroid/Asteroid3_tex.png"},
-            // Ajoutez autant de paires modèle-texture que nécessaire
     };
-
-    // Sélection aléatoire d'un modèle avec sa texture associée
     String[] selectedModelAndTexture = asteroidModelsAndTextures[RANDOM.nextInt(asteroidModelsAndTextures.length)];
-
-    // Chargement du modèle sélectionné
     Spatial asteroidGeo = assetManager.loadModel(selectedModelAndTexture[0]);
-
     asteroidGeo.setLocalScale(1.5f);
-
-    // Chargement de la texture associée
     Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
     mat.setTexture("DiffuseMap", assetManager.loadTexture(selectedModelAndTexture[1]));
-
-    // Application du matériau au modèle
     asteroidGeo.setMaterial(mat);
-
     return (Geometry) asteroidGeo;
 
 

@@ -15,6 +15,11 @@ import com.jme3.input.controls.KeyTrigger;
 
 import java.util.List;
 
+/**
+ * Classe permettant de gérer la caméra du jeu
+ * @author eberge
+ */
+
 
 public class CameraController extends BaseAppState {
     private ChaseCamera chaseCam;
@@ -83,13 +88,13 @@ public class CameraController extends BaseAppState {
 
         if (isChaseCamActive) {
             chaseCam.setEnabled(true);
-            flyCam.setEnabled(false);  // Désactiver FlyCam
+            flyCam.setEnabled(false);
             inputManager.setCursorVisible(true);
             planetInfoPanel.setVisible(true);
         } else {
             chaseCam.setEnabled(false);
-            flyCam.setEnabled(true);  // Activer FlyCam
-            flyCam.setDragToRotate(true); // Permet la rotation avec la souris
+            flyCam.setEnabled(true);
+            flyCam.setDragToRotate(true);
             inputManager.setCursorVisible(false);
             planetInfoPanel.setVisible(false);
         }
@@ -106,7 +111,6 @@ public class CameraController extends BaseAppState {
         chaseCam.setSpatial(planets.get(currentPlanetIndex).getBodyNode());
         chaseCam.setDefaultDistance(200);
 
-        // Mise à jour des infos de la planète avec l'API
         planetInfoPanel.updateInfo(planets.get(currentPlanetIndex));
     }
     private void switchToPrevPlanet() {

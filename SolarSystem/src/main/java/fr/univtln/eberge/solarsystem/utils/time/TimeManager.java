@@ -5,6 +5,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Classe permettant de gérer le temps.
+ * Permet de changer la vitesse du temps et de formater le temps.
+ * @author eberge
+ */
+
 public class TimeManager {
     private float speedFactor = 1f;
 

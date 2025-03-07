@@ -8,6 +8,11 @@ import com.jme3.scene.Node;
 import fr.univtln.eberge.solarsystem.body.sphere.Moon;
 import fr.univtln.eberge.solarsystem.body.sphere.Planet;
 
+/**
+ * Classe qui gère les revolutions et rotations des corps célestes
+ * @author eberge
+ */
+
 public class Movement {
     public static void rotatePlanet(Planet planet, double time) {
         float angle = (float)(((FastMath.TWO_PI / (planet.getRotationPeriod()*24*60*60)) * time)%FastMath.TWO_PI);

@@ -6,9 +6,17 @@ import org.json.JSONTokener;
 import java.io.InputStream;
 import java.util.HashMap;
 
+/**
+ * Classe permettant de récupérer des informations sur les planètes du système solaire.
+ * Les données sont stockées dans un fichier JSON dans le dossier Ressources/data.
+ * Les données sont chargées en mémoire lors du chargement de la classe.
+ * Les méthodes getPlanetInfo et getPlanetName permettent de récupérer des informations sur une planète.
+ * @author eberge
+ */
+
 public class PlanetInfoFetcher {
 
-    private static final String JSON_FILE = "data/planets.json"; // Chemin vers le fichier JSON
+    private static final String JSON_FILE = "data/planets.json";
     private static HashMap<String, JSONObject> planetData = new HashMap<>();
 
     static {
