@@ -6,7 +6,7 @@
 
 > **Simulation interactive du Système Solaire en 3D** 🌌 avec gestion des rotations, révolutions, HUD interactif, et affichage des informations des planètes en temps réel.
 
-![Preview](https://fr.wikipedia.org/wiki/Syst%C3%A8me_solaire#/media/Fichier:Solar_System_true_color.jpg)
+![alt text](https://fr.wikipedia.org/wiki/Syst%C3%A8me_solaire#/media/Fichier:Solar_System_true_color.jpg)
 
 ---
 
@@ -33,8 +33,8 @@
 ## 🚀 **Installation et Exécution**
 ### 🔹 **1. Cloner le projet**
 ```bash
-git clone https://github.com/ton-repo/solar-system.git
-cd solar-system
+git clone https://github.com/LeZozzz/Solar-System-Project
+cd Solar-System-Project
 ```
 
 ### 🔹 **2. Compiler le projet**
@@ -52,13 +52,14 @@ mvn exec:java -Dexec.mainClass="fr.univtln.eberge.solarsystem.App"
 ## 🎮 **Commandes du Jeu**
 | Touche | Action |
 |--------|--------|
+| `ZQSD` | Deplacement (mode FlyCam) |
 | `P` | Augmenter la vitesse du temps |
 | `I` | Réduire la vitesse du temps |
 | `O` | Inverser la direction des révolutions |
 | `Espace` | Pause / Reprendre la simulation |
-| `N` | Changer de planète (mode ChaseCam) |
-| `M` | Basculer entre **FlyCam** et **ChaseCam** |
-| `F` | Afficher / Masquer les informations de la planète |
+| `Flèche droite/gauche` | Changer de planète (mode ChaseCam) |
+| `Flèche haut/bas` | Zoom avant/arrière (mode ChaseCam) |
+| `C` | Basculer entre **FlyCam** et **ChaseCam** |
 | `Échap` | Quitter l’application |
 
 ---
@@ -77,7 +78,7 @@ solar-system/
 │
 │── src/main/resources/Textures/
 │   ├── Planets/               # Textures des planètes
-│   ├── Skybox/                # Images pour le fond d’espace
+│   ├── Moon/                # Textures des lunes
 │   └── Asteroids/             # Textures des astéroïdes
 │
 │── pom.xml                    # Configuration Maven
@@ -87,10 +88,9 @@ solar-system/
 ---
 
 ## 🌟 **Améliorations Futures**
-🔹 Ajout des **lunes** de chaque planète  
+🔹 Réorganisation entière du **GUI**
 🔹 **Affichage des constellations** et autres étoiles du ciel  
 🔹 Intégration de **données en temps réel** via API de la NASA  
-🔹 Compatibilité **VR** avec OpenXR  
 
 ---
 
